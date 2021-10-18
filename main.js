@@ -52,7 +52,7 @@ function createPlayer({ name, player, hp, img }) {
 
 function changeHP(player) {
   const $playerLife = document.querySelector(`.player${player.player} .life`);
-  player.hp -= Math.ceil(Math.random() * 20);
+  player.hp -= getRandom(20);
   //   console.log(`player${player.player} ${player.hp}`);
   $playerLife.style.width = `${player.hp}%`;
   if (player.hp <= 0) {
@@ -70,6 +70,9 @@ function drawPlayers() {
   const $winTitle = createElement("div", "loseTitle");
   $winTitle.innerHTML = `DRAW`;
   return $winTitle;
+}
+function getRandom(value) {
+  return Math.ceil(Math.random() * value);
 }
 
 $randomButton.addEventListener("click", () => {
