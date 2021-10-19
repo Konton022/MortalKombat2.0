@@ -10,6 +10,9 @@ const player1 = {
   attack: function () {
     console.log(`${this.name} Fight!!!`);
   },
+  changeHP,
+  elHP,
+  renderHP,
 };
 
 const player2 = {
@@ -21,6 +24,9 @@ const player2 = {
   attack: function () {
     console.log(`${this.name} Fight!!!`);
   },
+  changeHP,
+  elHP,
+  renderHP,
 };
 
 function createElement(tag, tagClass, img) {
@@ -50,42 +56,66 @@ function createPlayer({ name, player, hp, img }) {
   return $player;
 }
 
-function changeHP(player) {
-  const $playerLife = document.querySelector(`.player${player.player} .life`);
-  player.hp -= getRandom(20);
-  //   console.log(`player${player.player} ${player.hp}`);
-  $playerLife.style.width = `${player.hp}%`;
-  if (player.hp <= 0) {
-    $playerLife.style.width = `0%`;
-    $randomButton.disabled = true;
+function changeHP(value) {
+  this.hp -= value;
+  if (this.hp <= 0) {
+    this.hp = 0;
   }
+  return this.hp;
+}
+
+function elHP() {
+  return document.querySelector(`.player${this.player} .life`);
+}
+
+function renderHP() {
+  const player = this.elHP();
+
+  return (player.style.width = `${this.hp}%`);
 }
 
 function winPlayer(player) {
   const $winTitle = createElement("div", "loseTitle");
-  $winTitle.innerHTML = `${player.name} WIN`;
+  if (player) {
+    $winTitle.innerHTML = `${player.name} WINS`;
+  } else {
+    $winTitle.innerHTML = `DRAW`;
+  }
   return $winTitle;
 }
-function drawPlayers() {
-  const $winTitle = createElement("div", "loseTitle");
-  $winTitle.innerHTML = `DRAW`;
-  return $winTitle;
-}
+
 function getRandom(value) {
   return Math.ceil(Math.random() * value);
 }
+function createReloadButton() {
+  const $reloadWrap = createElement("div", "reloadWrap");
+  const $reloadButton = createElement("button", "button");
+  $reloadButton.innerHTML = `RESET`;
+  $reloadButton.addEventListener("click", () => {
+    window.location.reload();
+  });
+  $reloadWrap.appendChild($reloadButton);
+  return $reloadWrap;
+}
 
 $randomButton.addEventListener("click", () => {
-  //   console.log("click");
-  changeHP(player1);
-  changeHP(player2);
+  player1.changeHP(getRandom(20));
+  player2.changeHP(getRandom(20));
+  // console.log(player1.elHP());
+  player1.renderHP();
+  player2.renderHP();
+
+  if (player1.hp === 0 || player2.hp === 0) {
+    $randomButton.disabled = true;
+    $arenas.appendChild(createReloadButton());
+  }
+
   if (player1.hp <= 0 && player2.hp > 0) {
     $arenas.appendChild(winPlayer(player2));
   } else if (player2.hp <= 0 && player1.hp > 0) {
     $arenas.appendChild(winPlayer(player1));
   } else if (player1.hp <= 0 && player2.hp <= 0) {
-    // console.log("DRAW");
-    $arenas.appendChild(drawPlayers());
+    $arenas.appendChild(winPlayer());
   }
 });
 
