@@ -183,14 +183,14 @@ function setFightResult(player, enemy) {
   if (player.hit !== enemy.defence) {
     player2.changeHP(player.value);
     player2.renderHP();
-    generateLogs("hit", player2, player1);
+    generateLogs("hit", player2, player1, player.value);
   } else {
     generateLogs("defence", player2, player1);
   }
   if (enemy.hit !== player.defence) {
     player1.changeHP(enemy.value);
     player1.renderHP();
-    generateLogs("hit", player1, player2);
+    generateLogs("hit", player1, player2, enemy.value);
   } else {
     generateLogs("defence", player1, player2);
   }
@@ -227,7 +227,7 @@ function getCurrentTime() {
   return currentTime;
 }
 
-function generateLogs(type, player1, player2) {
+function generateLogs(type, player1, player2, value) {
   let text = "";
   let el = "";
 
@@ -244,16 +244,14 @@ function generateLogs(type, player1, player2) {
       text = logs.hit[getRandom(logs.hit.length - 1)]
         .replace("[playerDefence]", player1.name)
         .replace("[playerKick]", player2.name);
-      el = `<p>${getCurrentTime()} - ${text} ${player1.hp - 100} HP:[${
-        player1.hp
-      }/100]</p>`;
+      el = `<p>${getCurrentTime()} - ${text} -${value} [${player1.hp}/100]</p>`;
       $chat.insertAdjacentHTML("afterbegin", el);
       break;
     case "defence":
       text = logs.defence[getRandom(logs.defence.length - 1)]
         .replace("[playerDefence]", player1.name)
         .replace("[playerKick]", player2.name);
-      el = `<p>${getCurrentTime()} - ${text}  HP:[${player1.hp}/100]</p>`;
+      el = `<p>${getCurrentTime()} - ${text}  [${player1.hp}/100]</p>`;
       $chat.insertAdjacentHTML("afterbegin", el);
       break;
     case "end":
