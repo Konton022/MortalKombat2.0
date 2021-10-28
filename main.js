@@ -1,50 +1,18 @@
 import { player1, player2 } from "./players.js";
-import { createElement } from "./utils.js";
-import {
-  playerAttack,
-  enemyAttack,
-  generateLogs,
-  setFightResult,
-  showResults,
-} from "./__game.js";
+import Game from "./Game.js";
 
-import Game from "./game.js";
-
-const game = new Game()
-
-console.log('game', game);
-
-const $arenas = document.querySelector(".arenas");
+const game = new Game();
 const $formFight = document.querySelector(".control");
 
-function createPlayer({ name, player, hp, img }) {
-  const $player = createElement("div", `player${player}`);
-  const $progressBar = createElement("div", "progressbar");
-  const $life = createElement("div", "life");
-  $life.style.width = `${hp}%`;
-  const $name = createElement("div", "name");
-  $name.innerHTML = `${name}`;
-  const $character = createElement("div", "character");
-  const $img = createElement("img", "img", `${img}`);
-  $player.appendChild($progressBar);
-  $player.appendChild($character);
-  $progressBar.appendChild($life);
-  $progressBar.appendChild($name);
-  $character.appendChild($img);
-
-  $arenas.appendChild($player);
-}
-
 game.start();
-game.createPlayer(player1)
-//createPlayer(player1);
-createPlayer(player2);
-generateLogs("start", player1, player2);
+game.createPlayer(player1);
+game.createPlayer(player2);
+game.generateLogs("start", player1, player2);
 
 $formFight.addEventListener("submit", function (event) {
   event.preventDefault();
-  const enemy = enemyAttack();
-  const player = playerAttack();
-  setFightResult(player, enemy);
-  showResults();
+  const enemy = game.enemyAttack();
+  const player = game.playerAttack();
+  game.setFightResult(player, enemy);
+  game.showResults();
 });
