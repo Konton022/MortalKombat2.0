@@ -1,10 +1,10 @@
 class Player {
-  constructor(player, name, hp, img, weapon) {
-    this.player = player;
-    this.name = name;
-    this.hp = hp;
-    this.weapon = weapon;
-    this.img = img;
+  constructor(props) {
+    this.player = props.player;
+    this.name = props.name;
+    this.hp = props.hp;
+    this.weapon = props.weapon;
+    this.img = props.img;
   }
   changeHP(value) {
     this.hp -= value;
