@@ -6,7 +6,13 @@ import {
   generateLogs,
   setFightResult,
   showResults,
-} from "./game.js";
+} from "./__game.js";
+
+import Game from "./game.js";
+
+const game = new Game()
+
+console.log('game', game);
 
 const $arenas = document.querySelector(".arenas");
 const $formFight = document.querySelector(".control");
@@ -29,7 +35,9 @@ function createPlayer({ name, player, hp, img }) {
   $arenas.appendChild($player);
 }
 
-createPlayer(player1);
+game.start();
+game.createPlayer(player1)
+//createPlayer(player1);
 createPlayer(player2);
 generateLogs("start", player1, player2);
 
