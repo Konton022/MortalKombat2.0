@@ -1,21 +1,21 @@
 import { createElement, getCurrentTime, getRandom } from "./utils.js";
 import { logs, HIT, ATTACK } from "./constants.js";
 import { player1, player2 } from "./players.js";
+import FetchData from "./FetchData.js";
 
 const $arenas = document.querySelector(".arenas");
 const $chat = document.querySelector(".chat");
 const $formFight = document.querySelector(".control");
 
-class Game {
+const fetchData = new FetchData();
 
+class Game {
   start = () => {
     console.log("START GAME!!!");
     player1.createPlayer();
     player2.createPlayer();
-    this.generateLogs('start', player1, player2)
+    this.generateLogs("start", player1, player2);
   };
-
-
 
   winPlayer = ({ name }) => {
     const $winTitle = createElement("div", "loseTitle");
@@ -80,8 +80,9 @@ class Game {
         text = logs.hit[getRandom(logs.hit.length - 1)]
           .replace("[playerDefence]", player1.name)
           .replace("[playerKick]", player2.name);
-        el = `<p>${getCurrentTime()} - ${text} -${value} [${player1.hp
-          }/100]</p>`;
+        el = `<p>${getCurrentTime()} - ${text} -${value} [${
+          player1.hp
+        }/100]</p>`;
         $chat.insertAdjacentHTML("afterbegin", el);
         break;
       case "defence":
