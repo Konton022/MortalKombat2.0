@@ -1,10 +1,13 @@
+import { createElement } from "./utils.js";
+const $arenas = document.querySelector('.arenas')
+
 class Player {
-  constructor(player, name, hp, img, weapon) {
-    this.player = player;
-    this.name = name;
-    this.hp = hp;
-    this.weapon = weapon;
-    this.img = img;
+  constructor(props) {
+    this.player = props.player;
+    this.name = props.name;
+    this.hp = props.hp;
+    this.weapon = props.weapon;
+    this.img = props.img;
   }
   changeHP(value) {
     this.hp -= value;
@@ -22,6 +25,23 @@ class Player {
   }
   attack() {
     console.log(`${this.name} Fight!!!`);
+  }
+  createPlayer() {
+    const $player = createElement("div", `player${this.player}`);
+    const $progressBar = createElement("div", "progressbar");
+    const $life = createElement("div", "life");
+    $life.style.width = `${this.hp}%`;
+    const $name = createElement("div", "name");
+    $name.innerHTML = `${this.name}`;
+    const $character = createElement("div", "character");
+    const $img = createElement("img", "img", `${this.img}`);
+    $player.appendChild($progressBar);
+    $player.appendChild($character);
+    $progressBar.appendChild($life);
+    $progressBar.appendChild($name);
+    $character.appendChild($img);
+
+    $arenas.appendChild($player);
   }
 }
 
