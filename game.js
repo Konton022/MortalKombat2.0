@@ -7,29 +7,15 @@ const $chat = document.querySelector(".chat");
 const $formFight = document.querySelector(".control");
 
 class Game {
-  constructor(props) {}
 
   start = () => {
     console.log("START GAME!!!");
+    player1.createPlayer();
+    player2.createPlayer();
+    this.generateLogs('start', player1, player2)
   };
 
-  createPlayer({ name, player, hp, img }) {
-    const $player = createElement("div", `player${player}`);
-    const $progressBar = createElement("div", "progressbar");
-    const $life = createElement("div", "life");
-    $life.style.width = `${hp}%`;
-    const $name = createElement("div", "name");
-    $name.innerHTML = `${name}`;
-    const $character = createElement("div", "character");
-    const $img = createElement("img", "img", `${img}`);
-    $player.appendChild($progressBar);
-    $player.appendChild($character);
-    $progressBar.appendChild($life);
-    $progressBar.appendChild($name);
-    $character.appendChild($img);
 
-    $arenas.appendChild($player);
-  }
 
   winPlayer = ({ name }) => {
     const $winTitle = createElement("div", "loseTitle");
@@ -94,9 +80,8 @@ class Game {
         text = logs.hit[getRandom(logs.hit.length - 1)]
           .replace("[playerDefence]", player1.name)
           .replace("[playerKick]", player2.name);
-        el = `<p>${getCurrentTime()} - ${text} -${value} [${
-          player1.hp
-        }/100]</p>`;
+        el = `<p>${getCurrentTime()} - ${text} -${value} [${player1.hp
+          }/100]</p>`;
         $chat.insertAdjacentHTML("afterbegin", el);
         break;
       case "defence":
