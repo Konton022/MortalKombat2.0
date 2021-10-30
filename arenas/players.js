@@ -3,10 +3,9 @@ import FetchData from "./FetchData.js";
 
 const fetchData = new FetchData();
 
-// let p1 = await fetchData.getPlayerOne();
 let p1 = JSON.parse(localStorage.getItem("player1"));
 let p2 = await fetchData.getEnemyPlayer();
-console.log("p1", p1);
+
 const player1 = new Player({
   ...p1,
   player: 1,
