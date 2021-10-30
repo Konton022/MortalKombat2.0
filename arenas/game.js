@@ -32,7 +32,7 @@ class Game {
     const $reloadButton = createElement("button", "button");
     $reloadButton.innerHTML = `RESET`;
     $reloadButton.addEventListener("click", () => {
-      window.location.reload();
+      window.location.pathname = "../index.html";
     });
     $reloadWrap.appendChild($reloadButton);
     $arenas.appendChild($reloadWrap);
