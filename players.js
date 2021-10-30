@@ -12,14 +12,10 @@ const player1 = new Player({
   rootSelector: "arenas",
 });
 
-// console.log("player1", player1);
 const player2 = new Player({
   ...p2,
   player: 2,
   rootSelector: "arenas",
 });
-
-console.log("player1", player1);
-console.log("player2", player2);
 
 export { player1, player2 };

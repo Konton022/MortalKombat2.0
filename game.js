@@ -48,6 +48,19 @@ class Game {
     };
   };
 
+  getAttack = () => {
+    const body = {};
+    for (let item of $formFight) {
+      if (item.checked && item.name === "hit") {
+        body.hit = item.value;
+      }
+      if (item.checked && item.name === "defence") {
+        body.defence = item.value;
+      }
+      item.checked = false;
+    }
+    return body;
+  };
   playerAttack = () => {
     const attack = {};
     for (let item of $formFight) {

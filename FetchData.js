@@ -18,7 +18,7 @@ class FetchData {
     ).then((res) => res.json());
     return resp;
   };
-  postFight = async (hit, defence) => {
+  postFight = async ({ hit, defence }) => {
     const resp = await fetch(
       "http://reactmarathon-api.herokuapp.com/api/mk/player/fight",
       {
@@ -26,6 +26,7 @@ class FetchData {
         body: JSON.stringify({ hit, defence }),
       }
     ).then((res) => res.json());
+
     return resp;
   };
 }
