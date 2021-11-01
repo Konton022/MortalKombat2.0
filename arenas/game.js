@@ -1,21 +1,21 @@
 import { createElement, getCurrentTime, getRandom } from "./utils.js";
 import { logs, HIT, ATTACK } from "./constants.js";
 import { player1, player2 } from "./players.js";
+import FetchData from "./FetchData.js";
 
 const $arenas = document.querySelector(".arenas");
 const $chat = document.querySelector(".chat");
 const $formFight = document.querySelector(".control");
 
-class Game {
+const fetchData = new FetchData();
 
+class Game {
   start = () => {
     console.log("START GAME!!!");
     player1.createPlayer();
     player2.createPlayer();
-    this.generateLogs('start', player1, player2)
+    this.generateLogs("start", player1, player2);
   };
-
-
 
   winPlayer = ({ name }) => {
     const $winTitle = createElement("div", "loseTitle");
@@ -32,7 +32,7 @@ class Game {
     const $reloadButton = createElement("button", "button");
     $reloadButton.innerHTML = `RESET`;
     $reloadButton.addEventListener("click", () => {
-      window.location.reload();
+      window.location.pathname = "../index.html";
     });
     $reloadWrap.appendChild($reloadButton);
     $arenas.appendChild($reloadWrap);
@@ -48,6 +48,19 @@ class Game {
     };
   };
 
+  getAttack = () => {
+    const body = {};
+    for (let item of $formFight) {
+      if (item.checked && item.name === "hit") {
+        body.hit = item.value;
+      }
+      if (item.checked && item.name === "defence") {
+        body.defence = item.value;
+      }
+      item.checked = false;
+    }
+    return body;
+  };
   playerAttack = () => {
     const attack = {};
     for (let item of $formFight) {
@@ -80,8 +93,9 @@ class Game {
         text = logs.hit[getRandom(logs.hit.length - 1)]
           .replace("[playerDefence]", player1.name)
           .replace("[playerKick]", player2.name);
-        el = `<p>${getCurrentTime()} - ${text} -${value} [${player1.hp
-          }/100]</p>`;
+        el = `<p>${getCurrentTime()} - ${text} -${value} [${
+          player1.hp
+        }/100]</p>`;
         $chat.insertAdjacentHTML("afterbegin", el);
         break;
       case "defence":
